@@ -16,7 +16,11 @@ class ItemController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Items/Index');
+        // $items = Item::select('id', 'name', 'price', 'is_selling')->get();//select()は必要なカラムを取得することができる。get()をつけないとうまく取得できない。
+
+        return Inertia::render('Items/Index', [
+            'items' => Item::select('id', 'name', 'price', 'is_selling')->get()//$items変数としても使ってもいい
+        ]);
     }
 
     /**
