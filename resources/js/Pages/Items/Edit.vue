@@ -19,9 +19,11 @@ const form = reactive({
   price: props.item.price,
   is_selling: props.item.is_selling
 })
-const storeItem = () => {
-  Inertia.post('/items', form)
+
+const updateItem = id => {
+  Inertia.put(route('items.update', {item: id}), form)
 }
+
 </script>
 
 <template>
@@ -40,7 +42,7 @@ const storeItem = () => {
                   <div class="p-6 text-gray-900">
                       <ValidationError :errors="errors" />
                       <section class="text-gray-600 body-font relative">
-                        <form @submit.prevent="storeItem">
+                        <form @submit.prevent="updateItem(form.id)">
                           <div class="container px-5 py-8 mx-auto">
 
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">
@@ -71,12 +73,12 @@ const storeItem = () => {
                                     <label for="is_selling" class="leading-7 text-sm text-gray-600">ステータス</label>
                                     <input type="radio" id="is_selling" name="is_selling" v-model="form.is_selling" value="1">
                                     <label class="ml-2 mr-4">販売中</label>
-                                    <input type="radio" id="is_selling" name="is_selling" v-model="form.is_selling" value="1">
+                                    <input type="radio" id="is_selling" name="is_selling" v-model="form.is_selling" value="0">
                                     <label class="ml-2 mr-4">停止中</label>
                                   </div>
                                 </div>
                                 <div class="p-2 w-full">
-                                  <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">商品編集
+                                  <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">更新する
                                   </button>
                                 </div>
 
