@@ -2,9 +2,12 @@
 import FlashMassage from '@/Components/FlashMassage.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/inertia-vue3';
+import { onMounted } from 'vue';
+import Pagination from '@/Components/Pagination.vue';
+
 
 defineProps({
-  customers: Array
+  customers: Object
 });
 </script>
 
@@ -38,7 +41,7 @@ defineProps({
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr v-for="customer in customers" :key="customer.id">
+                                <tr v-for="customer in customers.data" :key="customer.id">
                                   <td class="border-b-2 border-gray-200 px-4 py-3">
                                       {{ customer.id }}
                                   </td>
@@ -51,6 +54,7 @@ defineProps({
                               </tbody>
                             </table>
                           </div>
+                          <Pagination class="mt-6" :links="customers.links"></Pagination>
                       </section>
                     </div>
                 </div>
