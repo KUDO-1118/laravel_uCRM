@@ -20,8 +20,8 @@ const form = reactive({
   gender: null,
   memo: null
 })
-const storeItem = () => {
-  Inertia.post('/items', form)
+const storeCustomer = () => {
+  Inertia.post('/customers', form)
 }
 </script>
 
@@ -41,7 +41,7 @@ const storeItem = () => {
                   <div class="p-6 text-gray-900">
                       <ValidationError :errors="errors" />
                       <section class="text-gray-600 body-font relative">
-                        <form @submit.prevent="storeItem">
+                        <form @submit.prevent="storeCustomer">
                           <div class="container px-5 py-8 mx-auto">
 
                             <div class="lg:w-1/2 md:w-2/3 mx-auto">

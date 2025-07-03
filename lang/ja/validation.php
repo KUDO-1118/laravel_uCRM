@@ -163,7 +163,14 @@ return [
       'caution' => '注意事項',
       'content' => '本文',
       'memo' => 'メモ',
-      'price' => '料金'
+      'price' => '料金',
+      'kana' => 'カナ',
+      'tel' => '電話番号',
+      'email' => 'メールアドレス',
+      'postcode' => '郵便番号',
+      'address' => '住所',
+      'birthday' => '誕生日',
+      'gender' => '性別'
     ],
 
 ];
