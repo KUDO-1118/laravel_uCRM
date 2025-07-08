@@ -1,6 +1,6 @@
 <script setup>
 import { getToday } from '@/commom';
-import { onMounted, reactive, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 
 const props = defineProps({
   'customers': Array,
@@ -21,6 +21,13 @@ onMounted(() => { //ページ読み込み後 即座に実行
   })
 })
 
+const totalPrice = computed(() => {//computedリアルな計算などに最適
+  let total = 0
+  itemList.value.forEach(item => {
+    total += item.price * item.quantity
+  })
+  return total
+})
 
 const form = reactive({
   date: null,
@@ -67,4 +74,6 @@ const quantity = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]//option用
       </tr>
     </tbody>
   </table>
+  <br>
+  合計：{{ totalPrice }}円
 </template>
