@@ -25,6 +25,8 @@ onMounted(() => { //ページ読み込み後 即座に実行
   })
 })
 
+const quantity = ref([...Array(11).keys()])
+
 const itemList = ref([])//リアクティブな配列を準備
 
 const totalPrice = computed(() => {//computedリアルな計算などに最適
@@ -130,7 +132,7 @@ const storePurchase = () => {//保存処理その２　DBに保存する
                                 </div>
 
                                 <div class="p-2 w-full">
-                                  <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">商品する</button>
+                                  <button class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">購入する</button>
                                 </div>
 
                               </div>
