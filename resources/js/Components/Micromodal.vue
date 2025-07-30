@@ -1,17 +1,29 @@
 <script setup>
-import axios from 'axios';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import axios from 'axios'
+axios.defaults.withCredentials = true
+axios.defaults.baseURL = 'http://127.0.0.1:8000'
+import { ref, onMounted, reactive } from 'vue'
 
-onMounted(() => {
-  axios.get('/api/user')
-  .then( res => {
-    console.log(res)
-  })
-})
-
+const search = ref('')
+const customers = ref([])
 const isShow = ref(false)
-const toggleStatus = () => { isShow.value = !isShow.value }
+
+const toggleStatus = () => {
+  isShow.value = !isShow.value
+}
+
+const searchCustomers = async () => {
+  try {
+    await axios.get('/sanctum/csrf-cookie')
+
+    const res = await axios.get(`/api/searchCustomers/?search=${search.value}`)
+    console.log(res.data)
+    customers.value = res.data.data  // paginate構造に合わせて
+    isShow.value = true
+  } catch (e) {
+    console.error('検索失敗:', e)
+  }
+}
 </script>
 
 <template>
@@ -36,5 +48,6 @@ const toggleStatus = () => { isShow.value = !isShow.value }
       </div>
     </div>
   </div>
-    <button @click="toggleStatus" type="button" data-micromodal-trigger="modal-1" href='javascript:;'>Open Modal Dialog</button>
+    <input name="customer" v-model="search">
+    <button @click="searchCustomers" type="button" data-micromodal-trigger="modal-1">検索する</button>
 </template>
