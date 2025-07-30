@@ -53,6 +53,10 @@ const storePurchase = () => {//保存処理その２　DBに保存する
   })
   Inertia.post(route('purchases.store'), form)
 }
+
+const setCustomerId = id => {
+  form.customer_id = id
+}
 </script>
 
 <template>
@@ -85,7 +89,7 @@ const storePurchase = () => {//保存処理その２　DBに保存する
 
                                 <div class="p-2 w-full">
                                   <div class="relative">
-                                    <Micromodal/>
+                                    <Micromodal @update:customerId="setCustomerId"/>
                                     <label for="customer" class="leading-7 text-sm text-gray-600">会員名</label>
                                   </div>
                                 </div>

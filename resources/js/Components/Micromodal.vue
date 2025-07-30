@@ -12,18 +12,38 @@ const toggleStatus = () => {
   isShow.value = !isShow.value
 }
 
+const emit = defineEmits(['update:customerId'])
+
+const setCustomer = e => {
+  search.value = e.kana
+  emit('update:customerId', e.id)
+  toggleStatus()
+}
+
 const searchCustomers = async () => {
   try {
-    await axios.get('/sanctum/csrf-cookie')
-
-    const res = await axios.get(`/api/searchCustomers/?search=${search.value}`)
+  await axios.get(`/api/searchCustomers/?search=${search.value}`)
+  .then( res => {
     console.log(res.data)
-    customers.value = res.data  // paginate構造に合わせて
-    isShow.value = true
-  } catch (e) {
-    console.error('検索失敗:', e)
+    customers.value = res.data
+  })
+  toggleStatus()
+  } catch(e){
+    console.log(e)
   }
 }
+// const searchCustomers = async () => {
+//   try {
+//     await axios.get('/sanctum/csrf-cookie')
+
+//     const res = await axios.get(`/api/searchCustomers/?search=${search.value}`)
+//     console.log(res.data)
+//     customers.value = res.data  // paginate構造に合わせて
+//     isShow.value = true
+//   } catch (e) {
+//     console.error('検索失敗:', e)
+//   }
+// }
 </script>
 
 <template>
@@ -50,7 +70,9 @@ const searchCustomers = async () => {
               <tbody>
                 <tr v-for="customer in customers.value.data" :key="customer.id">
                   <td class="border-b-2 border-gray-200 px-4 py-3">
+                    <button @click="setCustomer({id: customer.id, kana: customer.kana})" type="button" class="text-blue-400">
                       {{ customer.id }}
+                    </button>
                   </td>
                   <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.name }}</td>
                   <td class="border-b-2 border-gray-200 px-4 py-3">{{ customer.kana }}</td>
